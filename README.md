@@ -21,6 +21,61 @@
 1. [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Code)
 
 ---
+### Задание 1
+
+![AdminkaZabbix](https://github.com/PozdnikinEugene/hw-02/blob/main/img/1-1.png)
+
+Установите PostgreSQL
+```
+sudo apt install postgresql 
+```
+a. Установите репозиторий Zabbix
+```
+# wget https://repo.zabbix.com/zabbix/6.0/debian/pool/main/z/zabbix-release/zabbix-release_latest_6.0+debian11_all.deb
+# dpkg -i zabbix-release_latest_6.0+debian11_all.deb
+# apt update
+```
+b. Установите Zabbix сервер, веб-интерфейс и агент
+```
+# apt install zabbix-server-pgsql zabbix-frontend-php php7.4-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+```
+c. Создайте базу данных
+Установите и запустите сервер базы данных.
+```
+# sudo -u postgres createuser --pwprompt zabbix
+# sudo -u postgres createdb -O zabbix zabbix
+
+```
+На хосте Zabbix сервера импортируйте начальную схему и данные. Вам будет предложено ввести недавно созданный пароль.
+```
+# zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+```
+d. Настройте базу данных для Zabbix сервера
+Отредактируйте файл /etc/zabbix/zabbix_server.conf
+```
+DBPassword=password
+```
+Я воспользуюсь sed
+```
+# sed -i 's/# DBPassword=/DBPassword=password/g' /etc/zabbix/zabbix_server.conf
+```
+
+e. Запустите процессы Zabbix сервера и агента
+Запустите процессы Zabbix сервера и агента и настройте их запуск при загрузке ОС.
+```
+# systemctl restart zabbix-server zabbix-agent apache2
+# systemctl enable zabbix-server zabbix-agent apache2
+```
+f. Open Zabbix UI web page
+The default URL for Zabbix UI when using Apache web server is http://host/zabbix
+```
+http://176.108.241.192/zabbix
+```
+
+
+
+---
+---
 
 ### Задание 1
 
