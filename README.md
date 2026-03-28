@@ -25,6 +25,8 @@
 
 ![AdminkaZabbix](https://github.com/PozdnikinEugene/hw-02/blob/main/img/1-1.png)
 
+#### Использованые команды
+
 Установите PostgreSQL
 ```
 sudo apt install postgresql 
@@ -122,7 +124,21 @@ sed -i 's/ServerActive=127.0.0.1/ServerActive=176.108.241.192/g' /etc/zabbix/zab
 systemctl restart zabbix-agent
 ```
 ---
+
+
+### Задание 3 *
+Cкриншот раздела Latest Data, где видно свободное место на диске C:
+![C](https://github.com/PozdnikinEugene/hw-02/blob/main/img/3-1.png)
+
+#### Использованые команды
+
+
+Данных нет, создайтю новый Элемент данных (Item) на узле сети
+```
+-Имя: Свободное место на диске C:
+-Тип: Zabbix агент (или Zabbix агент (активный))
+-Ключ: vfs.fs.size[C:,free] — для объема в байтах.
+--Или vfs.fs.size[C:,pfree] — для свободного места в процентах.
+-Тип информации: Числовой (целое положительное) (для байт) или Числовой (плавающий) (для процентов).
+```
 ---
-
-### Задание 1
-
